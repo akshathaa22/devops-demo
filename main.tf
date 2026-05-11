@@ -1,5 +1,5 @@
 terraform {
-	resource_providers {
+	required_providers {
 		azure_rm = {
 			source= "hashicorp/azurerm"
 			version= "~3.0"
