@@ -1,34 +1,29 @@
-name: terraform
+name: Terraform
 
-run:
+on:
   push:
-   branches:
-   - main
+    branches:
+      - main
 
 jobs:
   terraform:
-   runs-on: ubuntu-latest
-   steps:
-   -name: Checkout code
-   uses: actions/checkout@v4
+    runs-on: ubuntu-latest
 
-    -name: Install Dependencies
-        run: npm install
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Run Tests
-        run: npm test
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
 
-   -name: Setup terraform
-   uses: hashicorp/setup-terraform@v3
+      - name: Terraform Init
+        run: terraform init
 
-   -name: Initialize terraform
-   uses: terraform init
+      - name: Terraform Format Check
+        run: terraform fmt -check
 
-   -name: Format terraform
-   uses: terraform fmt -check
+      - name: Terraform Validate
+        run: terraform validate
 
-   -name: Validate terraform
-   uses: terraform validate
-
-   -name: Plan terraform
-   uses: terraform plan
+      - name: Terraform Plan
+        run: terraform plan
